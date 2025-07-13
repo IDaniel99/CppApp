@@ -1,0 +1,36 @@
+# Doxyfile for a basic C++ project
+
+# Project info
+PROJECT_NAME           = "My C++ Project"
+PROJECT_BRIEF          = "Auto-generated documentation"
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+
+# Input settings
+INPUT                  = src
+FILE_PATTERNS          = *.cpp *.h
+RECURSIVE              = YES
+EXCLUDE                = build
+
+# Build settings
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_ANON_NSPACES   = YES
+
+# HTML output
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+
+# Disable LaTeX
+GENERATE_LATEX         = NO
+
+# Graphs (optional but useful)
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DOT_IMAGE_FORMAT       = svg
+
+# Quiet output
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
