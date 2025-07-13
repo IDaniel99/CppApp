@@ -5,34 +5,33 @@ on:
     branches:
       - main
       - develop
-    
-  pull-request:
+  pull_request:
     branches:
       - main
-      - develop
-  
+      - develop  
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    -name: Checkout code
-    -uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    -name: Install dependencies
-    run: sudo apt update && sudo apt install -y build-essential doxygen graphviz
+      - name: Install dependencies
+        run: sudo apt update && sudo apt install -y build-essential doxygen graphviz
 
-    -name: Build C++ code
-    run: |
-        mkdir -p build
-        g++ -std=c++17 -Wall -Wextra -o build/app *.cpp
+      - name: Build C++ code
+        run: |
+          mkdir -p build
+          g++ -std=c++17 -Wall -Wextra -o build/app src/*.cpp
 
-    -name: Generate doxygen
-    run: doxygen Doxyfile
+      - name: Generate Doxygen docs
+        run: doxygen Doxyfile
 
-    -name: Deploy Doxygen to GitHub Pages
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    uses: peaceiris/actions-gh-pages@v3
-    with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_dir: ./docs/html
+      - name: Deploy Doxygen to GitHub Pages
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/html
