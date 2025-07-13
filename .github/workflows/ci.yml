@@ -1,0 +1,38 @@
+name: C++ CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    
+  pull-request:
+    branches:
+      - main
+      - develop
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    -name: Checkout code
+    -uses: actions/checkout@v3
+
+    -name: Install dependencies
+    run: sudo apt update && sudo apt install -y build-essential doxygen graphviz
+
+    -name: Build C++ code
+    run: |
+        mkdir -p build
+        g++ -std=c++17 -Wall -Wextra -o build/app *.cpp
+
+    -name: Generate doxygen
+    run: doxygen Doxyfile
+
+    -name: Deploy Doxygen to GitHub Pages
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    uses: peaceiris/actions-gh-pages@v3
+    with:
+      github_token: ${{ secrets.GITHUB_TOKEN }}
+      publish_dir: ./docs/html
